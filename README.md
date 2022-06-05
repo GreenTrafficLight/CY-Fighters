@@ -1,6 +1,6 @@
 # CY-Fighters
 
-(Unfinished) project for school.
+Project for school.
 
 A (unfinished) C classic turn based game, Nuff said.
 
