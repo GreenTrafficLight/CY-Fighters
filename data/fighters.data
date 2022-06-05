@@ -1,0 +1,36 @@
+{
+	"name": "Fighter 1"
+	"health": 500
+	"attack": 25
+	"defense": 5
+	"agility": 1
+	"speed": 0
+	"skills":  [ "FIRE" ]
+},
+{
+	"name": "Fighter 2"
+	"health": 200
+	"attack": 50
+	"defense": 2
+	"agility": 5
+	"speed": 0
+	"skills":  [ "ATTACK DECREASED" ]
+},
+{
+	"name": "Fighter 3"
+	"health": 50
+	"attack": 100
+	"defense": 0
+	"agility": 10
+	"speed": 0
+	"skills":  [  ]
+},
+{
+	"name": "Fighter 4"
+	"health": 1000
+	"attack": 10
+	"defense": 0
+	"agility": 0
+	"speed": 0
+	"skills":  [ "HEAL" ]
+},

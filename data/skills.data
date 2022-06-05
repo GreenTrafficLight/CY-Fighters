@@ -1,0 +1,33 @@
+{
+	"name": "FIRE"
+	"description": "Set fire on a opponent"
+	"modifier": "set_effect"
+	"attribute": "fire"
+	"value": 10
+	"loop": 0
+	"range": 0
+	"cooldown": 5
+	"duration": 2
+},
+{
+	"name": "ATTACK DECREASED"
+	"description": "Decrease 25% attack of a opponent"
+	"modifier": "decrease"
+	"attribute": "attack"
+	"value": 25
+	"loop": 0
+	"range": 0 
+	"cooldown": 0
+	"duration": 0
+},
+{
+	"name": "HEAL"
+	"description": "Restore 50% health of a ally"
+	"modifier": "increase"
+	"attribute": "health"
+	"value": 50
+	"loop": 0
+	"range": 0 
+	"cooldown": 8
+	"duration": 0
+},
