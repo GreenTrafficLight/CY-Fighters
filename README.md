@@ -1,8 +1,8 @@
 # CY-Fighters
 
-(Unfinished) project for school
+(Unfinished) project for school.
 
-A C classic turn based game
+A C classic turn based game, Nuff said.
 
 # Inputs
 
