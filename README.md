@@ -2,7 +2,7 @@
 
 (Unfinished) project for school.
 
-A C classic turn based game, Nuff said.
+A (unfinished) C classic turn based game, Nuff said.
 
 # Inputs
 
