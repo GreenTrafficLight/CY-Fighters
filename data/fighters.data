@@ -23,7 +23,7 @@
 	"defense": 0
 	"agility": 10
 	"speed": 0
-	"skills":  [  ]
+	"skills":  [ "LOOP" ]
 },
 {
 	"name": "Fighter 4"

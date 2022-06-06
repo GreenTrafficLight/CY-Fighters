@@ -31,3 +31,14 @@
 	"cooldown": 8
 	"duration": 0
 },
+{
+	"name": "LOOP"
+	"description": "Attack 2 times"
+	"modifier": "loop"
+	"attribute": "none"
+	"value": 0
+	"loop": 2
+	"range": 0 
+	"cooldown": 8
+	"duration": 0
+},

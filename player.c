@@ -79,6 +79,7 @@ enum PLAYER_CHOICE Player_ChooseChoice(Player* player, int fighter_index)
 
     skill_all_locked = Fighter_CheckAllSkillsAreLocked(player_fighter);
 
+    // Wait for player input
     do {
         
         for (int i = 0; i < PLAYER_CHOICE_SIZE; i++)
@@ -140,6 +141,7 @@ int Player_ChooseSkill(Player* player, int fighter_index)
     while (player->team->fighters[fighter_index]->skills[position]->isLocked)
         position = (position + 1) % player->team->fighters[fighter_index]->skill_count;
 
+    // Wait for player input
     do {
         // Render current fighter skills
         Fighter_DrawSkills(player->team->fighters[fighter_index]);
@@ -194,6 +196,7 @@ int Player_ChooseFighter(Player* player, int fighter_index, Player* opponent)
     while (opponent->team->fighters[position]->is_locked)
         position = (position + 1) % opponent->team->fighters_count;
 
+    // Wait for player input
     do {
 
         // Render each opponent fighter name
@@ -255,55 +258,70 @@ int Player_ChooseFighter(Player* player, int fighter_index, Player* opponent)
 void Player_HandleInputs(Player* player, int fighter_index, Player* opponent)
 {
     enum PLAYER_CHOICE choice;
-    int selected_skill, selected_fighter;
-    Fighter* choosen_fighter = NULL;
+    int selected_skill_index, selected_fighter_index;
+    
+    Fighter* selected_fighter = NULL;
+    Skill* selected_skill = NULL;
 
     Fighter* player_fighter = player->team->fighters[fighter_index];
     
     // Player choose bewteen "Normal Attack" and "Skills" (maybe more ?)
     choice = Player_ChooseChoice(player, fighter_index);
     
-    // If the player has choosen to use the "Skill" option
-    if (choice == PLAYER_CHOICE_SKILL && player_fighter->skill_count != 0)
+    switch (choice)
     {
-        selected_skill = Player_ChooseSkill(player, fighter_index);
+        // If the player has choosen to use the "Normal Attack" option
+        case PLAYER_CHOICE_ATTACK:
+            selected_fighter_index = Player_ChooseFighter(player, fighter_index, opponent);
+            selected_fighter = opponent->team->fighters[selected_fighter_index];
 
-        switch (player_fighter->skills[selected_skill]->modifier)
-        {
-            // Choose your own fighters
-            case SKILL_MODIFIER_INCREASE:
-                selected_fighter = Player_ChooseFighter(player, fighter_index, player);
-                choosen_fighter = player->team->fighters[selected_fighter];
-                break;
+            Fighter_Attack(player_fighter, selected_fighter);
+            break;
+
+        // If the player has choosen to use the "Choose Skills" option
+        case PLAYER_CHOICE_SKILL:
+
+            selected_skill_index = Player_ChooseSkill(player, fighter_index);
+
+            selected_skill = player_fighter->skills[selected_skill_index];
+
+            switch (selected_skill->modifier)
+            {
+                // Choose your own fighters
+                case SKILL_MODIFIER_INCREASE:
+                    selected_fighter_index = Player_ChooseFighter(player, fighter_index, player);
+                    selected_fighter = player->team->fighters[selected_fighter_index];
+
+                    Fighter_UseSkill(selected_skill, selected_fighter);
+                    break;
+
+                // Choose your opponents fighters
+
+                // Attack multiple times
+                case SKILL_MODIFIER_LOOP:
+                    for (int i = 0; i < selected_skill->loop; i++)
+                    {
+                        selected_fighter_index = Player_ChooseFighter(player, fighter_index, opponent);
+                        selected_fighter = opponent->team->fighters[selected_fighter_index];
+
+                        Fighter_Attack(player_fighter, selected_fighter);
+                    }
+                    break;
+
+                //
+                default:
+                    selected_fighter_index = Player_ChooseFighter(player, fighter_index, opponent);
+                    selected_fighter = opponent->team->fighters[selected_fighter_index];
+
+                    Fighter_UseSkill(selected_skill, selected_fighter);
+                    break;
+            }
+
             
-            // Choose your opponents fighters
-            default:
-                selected_fighter = Player_ChooseFighter(player, fighter_index, opponent);
-                choosen_fighter = opponent->team->fighters[selected_fighter];
-                break;
-        }
-    }
-    // If the player has choosen to use the "Normal Attack" option
-    else
-    {
-        selected_fighter = Player_ChooseFighter(player, fighter_index, opponent);
-        choosen_fighter = opponent->team->fighters[selected_fighter];
-    }
-
-
-    if (choosen_fighter != NULL)
-    {
-        switch (choice)
-        {
-            case PLAYER_CHOICE_ATTACK:
-                Fighter_Attack(player_fighter, choosen_fighter);
-                break;
-            case PLAYER_CHOICE_SKILL:
-                Fighter_UseSkill(player_fighter->skills[selected_skill], choosen_fighter);
-            
-            default:
-                break;
-        }
+            break;
+        
+        default:
+            break;
     }
 }
 

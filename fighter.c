@@ -331,16 +331,20 @@ void Fighter_DrawStatus(Fighter* fighter, int fighter_index)
                     switch (fighter->fighter_status[i]->current_status)
                     {
                         case FIGHTER_STATUS_STATS_INCREASED:
-                            status_drawing = "Up"; //"\u2744";
+                            status_drawing = "⬆"; //"\u2744";
                             break;
                         case FIGHTER_STATUS_STATS_DECREASED:
-                            status_drawing = "Down"; //"\u2744";
+                            status_drawing = "⬇"; //"\u2744";
                             break;
                         case FIGHTER_STATUS_FROZEN:
-                            status_drawing = "Frozen"; //"\u2744";
+                            status_drawing = "❄"; //"\u2744";
                             break;
                         case FIGHTER_STATUS_ON_FIRE:
-                            status_drawing = "Fire"; //"\u1F525";
+                            status_drawing = "🔥"; //"\u1F525";
+                            break;
+                        case FIGHTER_STATUS_SLEEPING:
+                            status_drawing = "💤";
+                            break;
                         default:
                             break;
                     }
