@@ -86,7 +86,7 @@ enum PLAYER_CHOICE Player_ChooseChoice(Player* player, int fighter_index)
         for (int i = 0; i < choice_count; i++)
         {   
             // Player can't choose the skill option if they are all locked or have none
-            if (i == 1 && skill_all_locked || i == 1 && player_fighter->skill_count == 0)
+            if ((i == 1 && skill_all_locked) || (i == 1 && player_fighter->skill_count == 0))
             {
                 choice_count -= 1;
                 wattron(player->team_interface->window, A_DIM);
@@ -119,6 +119,8 @@ enum PLAYER_CHOICE Player_ChooseChoice(Player* player, int fighter_index)
                 break;
         }
     } while (input < 0);
+
+    return input;
 }
 
 int Player_ChooseSkill(Player* player, int fighter_index)
@@ -171,6 +173,8 @@ int Player_ChooseSkill(Player* player, int fighter_index)
                 break;
         }
     } while (input < 0);
+
+    return input;
 }
 
 int Player_ChooseFighter(Player* player, int fighter_index, Player* opponent)
@@ -190,7 +194,7 @@ int Player_ChooseFighter(Player* player, int fighter_index, Player* opponent)
         // Render each opponent fighter name
         for (int i = 0; i < opponent->team->fighters_count; i++)
         {
-            if (opponent->team->fighters[i] != NULL);
+            if (opponent->team->fighters[i] != NULL)
             {
                 if (!opponent->team->fighters[i]->is_locked)
                     mvwprintw(player->team_interface->window, i * 2 + 11, 5, "%s, H : %d / %d", opponent->team->fighters[i]->name, (int)opponent->team->fighters[i]->current_health, (int)opponent->team->fighters[i]->max_health);
@@ -239,6 +243,8 @@ int Player_ChooseFighter(Player* player, int fighter_index, Player* opponent)
                 break;
         }
     } while (input < 0);
+
+    return input;
 }
  
 void Player_HandleInputs(Player* player, int fighter_index, Player* opponent)

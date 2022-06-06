@@ -58,6 +58,8 @@ int Menu_ChooseOption(Menu* menu)
                 break;
         }
     } while (input < 0);
+
+    return input;
 }
 
 void Menu_Update(Menu* menu)

@@ -464,6 +464,8 @@ char File_Manager_ReadString(FILE* file, char c, char* str)
     }
     
     c = fgetc(file);
+
+    return c;
 }
 
 char File_Manager_ReadFloat(FILE* file, char c, float* attribute)
@@ -492,5 +494,6 @@ char File_Manager_Skip_Whitespace(FILE* file, char c)
 {
     while (c == ' ' || c == '\n' || c == '\r' || c == '\t')
         c = fgetc(file);
+    return c;
 }
 

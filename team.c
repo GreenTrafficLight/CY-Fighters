@@ -20,6 +20,8 @@ Team* Team_Init(Team_Interface* interface)
 
     for (int i = 0; i < TEAM_MAX_SIZE; i++)
         team->fighters[i] = NULL;
+
+    return team;
 }
 
 void Team_AddFighter(Team* team, Fighter* fighter)
@@ -45,16 +47,6 @@ void Team_AddFighter(Team* team, Fighter* fighter)
     }
 
     team->fighters_count++;
-}
-
-void Team_GetFightersCount(Team* team)
-{
-    for (int i = 0; i < TEAM_MAX_SIZE; i++)
-    {
-        if (team->fighters[i] != NULL)
-            team->fighters_count++;
-    }
-        
 }
 
 // Gameplay Functions //
