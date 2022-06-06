@@ -56,12 +56,9 @@ char* Fighters_Database_ChooseFighter(Fighters_Database* fighters_database)
     return fighters_database->fighters_name[position];
 }
 
-void Fighters_Database_Update(Fighters_Database* fighters_database, Team* team, bool randomize)
+void Fighters_Database_CreateTeam(Fighters_Database* fighters_database, Team* team, bool randomize)
 {
     char* fighter_name;
-
-    // Disable keyboard typing
-    noecho();
 
     // User choose their fighter
     if (!randomize)
@@ -86,6 +83,15 @@ void Fighters_Database_Update(Fighters_Database* fighters_database, Team* team, 
             Team_AddFighter(team, File_Manager_GetFighter(fighter_name));
         }
     }
+}
+
+void Fighters_Database_Update(Fighters_Database* fighters_database, Team* team, bool randomize)
+{
+    // Disable keyboard typing
+    noecho();
+
+    // Create team from fighters database
+    Fighters_Database_CreateTeam(fighters_database, team, randomize);
 
     // Disable enable
     echo();

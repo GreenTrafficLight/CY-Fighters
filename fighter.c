@@ -80,24 +80,25 @@ void Fighter_Attack(Fighter* fighter, Fighter* opponent)
 
 bool Fighter_CheckAllSkillsAreLocked(Fighter* fighter)
 {
-    bool skill_all_locked = false;
+    // Return true if the fighter doesn't have any skills
+    if (fighter->skill_count == 0)
+        return true;
 
     // Check if all skills are locked
     for (int i = 0; i < fighter->skill_count; i++)
     {
         if (fighter->skills[i] != NULL)
         {
-            if (fighter->skills[i]->isLocked)
-                skill_all_locked = true;
-            else
+            // If one skill isn't locked, return false
+            if (!fighter->skills[i]->isLocked)
             {
-                skill_all_locked = false;
-                return skill_all_locked;
+                return false;
             }   
         }
     }
 
-    return skill_all_locked;
+    // If all skills are locked return true
+    return true;
 }
 
 void Fighter_UseSkill(Skill* skill, Fighter* fighter)

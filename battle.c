@@ -144,7 +144,7 @@ void Battle_TakeTurn(Battle* battle, Player* player1, Player* player2)
                     if (player2->is_defeated)
                         break;
 
-                    // Update both player
+                    // Player control what to do
                     Player_Update(player1, i, player2);
                     
                     // Render both team
@@ -172,7 +172,7 @@ void Battle_TakeTurn(Battle* battle, Player* player1, Player* player2)
                 if (player2->is_defeated)
                     break;
 
-                // Update both player
+                // Computer control what to do
                 Computer_Update(player1, i, player2, battle->difficulty);
                 
                 // Render both team

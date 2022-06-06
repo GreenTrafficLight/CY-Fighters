@@ -5,8 +5,10 @@
 #include "fighter.h"
 #include "skill.h"
 
+// Get the fighters from the file
 void File_Manager_GetFighters(Fighters_Database* fighter_database);
 
+// Get the fighters name from the file
 char File_Manager_GetFighterNames(Fighters_Database* fighter_database, FILE* file, char c, int index);
 
 // Read Fighter from file

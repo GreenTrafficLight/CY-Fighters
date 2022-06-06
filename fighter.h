@@ -57,7 +57,7 @@ typedef struct
 
 //// Constructor ////
 
-// Allocator memory
+// Allocator memory for Fighter struct
 Fighter* Fighter_Init(char* name, Team_Interface* team_interface);
 
 // Add skill to fighter

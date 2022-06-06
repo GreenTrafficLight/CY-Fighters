@@ -19,6 +19,7 @@ Player* Player_Init(bool isComputer, Team_Interface* team_interface)
 
     player->team_interface = team_interface;
 
+    // Activate arroww keys for team interface window
     keypad(player->team_interface->window, true);
 
     // TO CHANGE
@@ -52,9 +53,6 @@ void Player_CreateTeam(Player* player, bool isComputer) // Add bool isComputer w
     else
         player->team->name = "Equipe 2";
 
-    //Team_AddFighter(player->team, File_Manager_GetFighter("test1"));
-    //Team_AddFighter(player->team, File_Manager_GetFighter("test2"));
-    //Team_AddFighter(player->team, File_Manager_GetFighter("test3"));
 }
 
 // Gameplay Functions //
@@ -65,30 +63,28 @@ enum PLAYER_CHOICE Player_ChooseChoice(Player* player, int fighter_index)
     Team_Render(player->team);
 
     int choice;
-    int input = -1, position = 0, choice_count = 2;
+    int input = -1, position = 0;
     bool skill_all_locked = false;
 
-
+    // Get player fighter
     Fighter* player_fighter = player->team->fighters[fighter_index];
 
+    // Print stats of player fighter
     mvwprintw(player->team_interface->window, 9, 2, "ATK : %d  DEF : %d  AG : %d", (int)player_fighter->attack, (int)player_fighter->defense, (int)player_fighter->agility);
 
-    char choices[2][32] = 
-    {
-        "Normal Attack",
-        "Choose Skill",
-    };
+    char* choices[PLAYER_CHOICE_SIZE];
+    choices[0] = "Normal Attack";
+    choices[1] = "Choose Skill";
 
     skill_all_locked = Fighter_CheckAllSkillsAreLocked(player_fighter);
 
     do {
         
-        for (int i = 0; i < choice_count; i++)
+        for (int i = 0; i < PLAYER_CHOICE_SIZE; i++)
         {   
             // Player can't choose the skill option if they are all locked or have none
-            if ((i == 1 && skill_all_locked) || (i == 1 && player_fighter->skill_count == 0))
+            if (i == PLAYER_CHOICE_SKILL && skill_all_locked)
             {
-                choice_count -= 1;
                 wattron(player->team_interface->window, A_DIM);
                 mvwprintw(player->team_interface->window, i * 2 + 11, 5, "%s", choices[i]);
                 wattroff(player->team_interface->window, A_DIM);
@@ -102,15 +98,23 @@ enum PLAYER_CHOICE Player_ChooseChoice(Player* player, int fighter_index)
         mvwprintw(player->team_interface->window, position * 2 + 11, 5, "%s", choices[position]);
         wattroff(player->team_interface->window, A_REVERSE);
 
-        // User choose with the keypad which option to use
+        // User choose with the arrow keys which option to use
         choice = wgetch(player->team_interface->window);
         switch (choice)
         {
             case KEY_UP:
-                position = (position - 1 + choice_count) % choice_count;                 
+                
+                do {
+                    position = (position - 1 + PLAYER_CHOICE_SIZE) % PLAYER_CHOICE_SIZE;     
+                } while (skill_all_locked && position == PLAYER_CHOICE_SKILL);
+                            
                 break;
             case KEY_DOWN:
-                position = (position + 1) % choice_count; 
+                
+                do {
+                    position = (position + 1) % PLAYER_CHOICE_SIZE; 
+                } while (skill_all_locked && position == PLAYER_CHOICE_SKILL);
+                
                 break;
             case 10:
                 input = position;
@@ -311,24 +315,35 @@ void Player_IsDefeated(Player* player)
 
 void Player_Update(Player* player, int fighter_index, Player* opponent)
 {
-    if (player->isYourTurn)
+    if (player != NULL)
     {
-        // Select current fighter
-        player->team->fighters[fighter_index]->is_selected = true;
+        if (player->isYourTurn)
+        {
+            // Select current fighter
+            player->team->fighters[fighter_index]->is_selected = true;
 
-        // Choose what to do with this fighter
-        Player_HandleInputs(player, fighter_index, opponent);
-        
-        // De-select current fighter
-        player->team->fighters[fighter_index]->is_selected = false;
+            // Choose what to do with this fighter
+            Player_HandleInputs(player, fighter_index, opponent);
+            
+            // De-select current fighter
+            player->team->fighters[fighter_index]->is_selected = false;
 
-        // Check if opponent team is defeated
-        Player_IsDefeated(opponent);
+            // Check if opponent team is defeated
+            Player_IsDefeated(opponent);
+        }
+        else
+        {
+            // Update each fighter at the end of player turn
+            Fighter_Update(player->team->fighters[fighter_index]);
+        }
     }
     else
     {
-        // Update each fighter at the end of player turn
-        Fighter_Update(player->team->fighters[fighter_index]);
+        clear();
+        refresh();
+        mvprintw(0, 0, "Player couldn't be updated !");
+        mvprintw(2, 0, "Press any key to exit\n");
+        getch(); 
     }
 }
 
@@ -336,23 +351,34 @@ void Player_Update(Player* player, int fighter_index, Player* opponent)
 
 void Player_Render(Player* player)
 {
-    // Scale up window if it's the player turn
-    if (player->isYourTurn)
+    if (player != NULL)
     {
-        wclear(player->team_interface->window);
-        wrefresh(player->team_interface->window);
-        wresize(player->team_interface->window, 6 * 3 + 2, 50 + 2);
-    }
-    // Scale down window if it's not the player turn
-    else if (!player->isYourTurn)
-    {
-        wclear(player->team_interface->window);
-        wrefresh(player->team_interface->window);
-        wresize(player->team_interface->window, 6 + 2, 50 + 2);
-    }
+        // Scale up window if it's the player turn
+        if (player->isYourTurn)
+        {
+            wclear(player->team_interface->window);
+            wrefresh(player->team_interface->window);
+            wresize(player->team_interface->window, 6 * 3 + 2, 50 + 2);
+        }
+        // Scale down window if it's not the player turn
+        else if (!player->isYourTurn)
+        {
+            wclear(player->team_interface->window);
+            wrefresh(player->team_interface->window);
+            wresize(player->team_interface->window, 6 + 2, 50 + 2);
+        }
 
-    // Render team of player
-    Team_Render(player->team);
+        // Render team of player
+        Team_Render(player->team);
+    }
+    else
+    {
+        clear();
+        refresh();
+        mvprintw(0, 0, "Player couldn't be rendered !");
+        mvprintw(2, 0, "Press any key to exit\n");
+        getch(); 
+    }
 }
 
 // Destructor

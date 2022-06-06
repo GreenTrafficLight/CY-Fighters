@@ -6,7 +6,7 @@
 #include "team_interface.h"
 #include "team.h"
 
-enum PLAYER_CHOICE { PLAYER_CHOICE_ATTACK, PLAYER_CHOICE_SKILL,};
+enum PLAYER_CHOICE { PLAYER_CHOICE_ATTACK, PLAYER_CHOICE_SKILL, PLAYER_CHOICE_SIZE };
 
 typedef struct 
 {
@@ -24,8 +24,10 @@ typedef struct
 
 // Constructor //
 
+// Allocate memory for Player struct
 Player* Player_Init(bool isComputer, Team_Interface* team_interface);
 
+// Create team for player, choose if it's played by a computer or not
 void Player_CreateTeam(Player* player, bool isComputer);
 
 // Gameplay Functions //
@@ -50,6 +52,7 @@ void Player_Update(Player* player, int fighter_index, Player* opponent);
 
 // Rendering Functions //
 
+// Render player on screen
 void Player_Render(Player* player);
 
 // Destructor //

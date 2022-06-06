@@ -14,6 +14,7 @@ Menu* Menu_Init()
     menu->options[0] = "Quick Battle";
     menu->options[1] = "Battle";
 
+    // Activate arrow keys for menu
     keypad(stdscr, TRUE);
 
     return menu;
@@ -24,11 +25,11 @@ int Menu_ChooseOption(Menu* menu)
     int choice;
     int input = -1, position = 0;
 
+
+
     do {
 
-        // Render the options
-        for (int i = 0; i < MENU_OPTIONS_SIZE; i++)
-            mvprintw(i * 2, 0, "%s", menu->options[i]);
+        Menu_Render(menu);
 
         // Highlight the current choosen option
         if (menu->options[position] != NULL)
@@ -69,8 +70,8 @@ void Menu_Update(Menu* menu)
     // Disable keyboard typing
     noecho();
 
+    // Get selected option
     menu_option = Menu_ChooseOption(menu);
-
     menu->selected = menu_option;
 
     // Enable keyboard typing
@@ -79,6 +80,7 @@ void Menu_Update(Menu* menu)
 
 void Menu_Render(Menu* menu)
 {
+    // Render the options
     for (int i = 0; i < MENU_OPTIONS_SIZE; i++)
         mvprintw(i * 2, 0, "%s", menu->options[i]);
 }

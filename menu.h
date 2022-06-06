@@ -11,12 +11,19 @@ typedef struct
 
 } Menu;
 
+// Allocate memory
 Menu* Menu_Init();
 
+// User choose their option in the menu
+void Menu_ChooseOptions(Menu* menu); 
+
+// Update state of menu
 void Menu_Update(Menu* menu);
 
+// Render menu on screen
 void Menu_Render(Menu* menu);
 
+// Free memory
 void Menu_Free(Menu* menu);
 
 #endif

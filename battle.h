@@ -11,16 +11,20 @@ enum BATTLE_AGAINST_OPTION { BATTLE_AGAINST_OPTION_PLAYER, BATTLE_AGAINST_OPTION
 
 typedef struct 
 {
+    // If the battle is finished
     bool is_over;
 
+    // If it's a normal or quick battle
     bool is_quickBattle;
 
+    // The difficulty of the battle
     enum BATTLE_DIFFICULTY difficulty;
 
 } Battle;
 
 // Constructor //
 
+// Allocate memory for Battle*
 Battle* Battle_Init();
 
 // Gameplay Functions //

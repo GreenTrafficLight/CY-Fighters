@@ -31,7 +31,7 @@ Skill* Skill_Init(char* name, Team_Interface* team_interface)
     return skill;
 }
 
-// Gameplay Functions
+// Gameplay Functions //
 
 void Skill_Update(Skill* skill)
 {   
@@ -44,7 +44,7 @@ void Skill_Update(Skill* skill)
         skill->isLocked = false;
 }
 
-// Rendering Functions
+// Rendering Functions //
 
 void Skill_DrawName(Skill* skill, int skill_index)
 {
@@ -79,6 +79,14 @@ void Skill_Render(Skill* skill, int skill_index)
     {
         Skill_DrawName(skill, skill_index);
         Skill_DrawDescription(skill, skill_index);
+    }
+    else 
+    {
+        clear();
+        refresh();
+        mvprintw(0, 0, "Skill couldn't be rendered !");
+        mvprintw(2, 0, "Press any key to exit\n");
+        getch();
     }
 }
 
