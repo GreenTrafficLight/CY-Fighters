@@ -25,7 +25,7 @@ Fighter* Fighter_Init(char* name, Team_Interface* team_interface)
 
     fighter->skill_count = 0;
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < MAX_FIGHTER_STATUS; i++)
     {
         Fighter_Status* fighter_status = malloc(sizeof(Fighter_Status));
         
@@ -152,8 +152,6 @@ void Fighter_UseSkill(Skill* skill, Fighter* fighter)
                 break;
         }
     }
-    
-    
     // Set Effect of choosen fighter
     else if (skill->modifier == SKILL_MODIFIER_SET_EFFECT)
     {
@@ -169,7 +167,7 @@ void Fighter_UseSkill(Skill* skill, Fighter* fighter)
         }
     }
 
-    // Update skill cooldown
+    // Update skill cooldown and duration
     skill->current_duration = skill->duration;
     skill->current_cooldown = skill->cooldown;
 
@@ -220,16 +218,15 @@ void Fighter_UpdateStatus(Fighter* fighter)
                 // TO DO
                 Fighter_TakeStatusEffect(fighter, fighter->fighter_status[i]);
 
+                // Decrease duration of status
+                fighter->fighter_status[i]->affected_skill->current_duration--;
+
                 // Reset status to normal if duration has finished
-                if (fighter->fighter_status[i]->affected_skill->current_duration == 0)
+                if (fighter->fighter_status[i]->affected_skill->current_duration <= 0)
                 {
                     // TO DO
                     Fighter_ResetStatus(fighter, fighter->fighter_status[i]);
-                }
-                else
-                    // Decrease duration of status
-                    fighter->fighter_status[i]->affected_skill->current_duration--;
-                    
+                }   
             }
         }
     } 
