@@ -1,6 +1,6 @@
 # CY-Fighters
 
-Project for school.
+Project for school. (Had to do it 3 times, one time with interface stored in array, second time with ANSI escape codes, third time with ncurses,  I didn't know I could this library smh)
 
 A (unfinished) C classic turn based game, Nuff said.
 
