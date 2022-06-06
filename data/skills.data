@@ -18,7 +18,7 @@
 	"loop": 0
 	"range": 0 
 	"cooldown": 0
-	"duration": 0
+	"duration": 2
 },
 {
 	"name": "HEAL"
