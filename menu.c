@@ -25,8 +25,6 @@ int Menu_ChooseOption(Menu* menu)
     int choice;
     int input = -1, position = 0;
 
-
-
     do {
 
         Menu_Render(menu);
