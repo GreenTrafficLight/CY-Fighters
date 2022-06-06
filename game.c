@@ -106,6 +106,8 @@ void Game_Free(Game* game)
 
     Battle_Free(game->battle);
 
+    Fighters_Database_Free(game->fighters_database);
+
     free(game);
     game = NULL;
 }

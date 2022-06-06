@@ -1,6 +1,6 @@
-OBJS	= battle.o computer.o fighters_database.o fighter.o file_manager.o game.o main.o menu.o player.o skill.o team_interface.o team.o
-SOURCE	= battle.c computer.c fighters_database.c fighter.c file_manager.c game.c main.c menu.c player.c skill.c team_interface.c team.c
-HEADER	= battle.h computer.h fighters_database.h fighter.h file_manager.h game.h menu.h player.h skill.h team_interface.h team.h
+OBJS	= battle.o commons.o computer.o fighters_database.o fighter.o file_manager.o game.o main.o menu.o player.o skill.o team_interface.o team.o
+SOURCE	= battle.c commons.c computer.c fighters_database.c fighter.c file_manager.c game.c main.c menu.c player.c skill.c team_interface.c team.c
+HEADER	= battle.h commons.h computer.h fighters_database.h fighter.h file_manager.h game.h menu.h player.h skill.h team_interface.h team.h
 OUT	= main
 CC	 = gcc
 FLAGS	 = -g -c -Wall
@@ -11,6 +11,9 @@ all: $(OBJS)
 
 battle.o: battle.c
 	$(CC) $(FLAGS) battle.c 
+
+commons.o: commons.c
+	$(CC) $(FLAGS) commons.c
 
 computer.o: computer.c
 	$(CC) $(FLAGS) computer.c 

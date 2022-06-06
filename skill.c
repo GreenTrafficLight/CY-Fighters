@@ -2,6 +2,8 @@
 
 #include <stdlib.h>
 
+#include "commons.h"
+
 //  Constructor
 
 Skill* Skill_Init(char* name, Team_Interface* team_interface)
@@ -35,13 +37,20 @@ Skill* Skill_Init(char* name, Team_Interface* team_interface)
 
 void Skill_Update(Skill* skill)
 {   
-    // Decrease cooldown of skill if it's locked
-    if (skill->current_cooldown != 0 && skill->isLocked)
-        skill->current_cooldown--;
+    if (skill != NULL)
+    {
+        // Decrease cooldown of skill if it's locked
+        if (skill->current_cooldown != 0 && skill->isLocked)
+            skill->current_cooldown--;
 
-    // Unlock skill if cooldown is finished
-    if (skill->current_cooldown == 0)
-        skill->isLocked = false;
+        // Unlock skill if cooldown is finished
+        if (skill->current_cooldown == 0)
+            skill->isLocked = false;
+    }
+    else
+    {
+        printError("Skill couldn't be updated !");
+    }
 }
 
 // Rendering Functions //
@@ -82,11 +91,7 @@ void Skill_Render(Skill* skill, int skill_index)
     }
     else 
     {
-        clear();
-        refresh();
-        mvprintw(0, 0, "Skill couldn't be rendered !");
-        mvprintw(2, 0, "Press any key to exit\n");
-        getch();
+        printError("Skill couldn't be rendered !");
     }
 }
 

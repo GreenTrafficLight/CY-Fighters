@@ -6,8 +6,9 @@
 #include "ncurses.h"
 #include "team.h"
 #include "file_manager.h"
+#include "commons.h"
 
-// Constructor
+// Constructor //
 
 Player* Player_Init(bool isComputer, Team_Interface* team_interface)
 {
@@ -28,7 +29,7 @@ Player* Player_Init(bool isComputer, Team_Interface* team_interface)
     return player;
 }
 
-void Player_CreateTeam(Player* player, bool isComputer) // Add bool isComputer with randomization ?
+void Player_CreateTeam(Player* player, bool isComputer)
 {
     // Put fighter selection screen here
 
@@ -339,15 +340,11 @@ void Player_Update(Player* player, int fighter_index, Player* opponent)
     }
     else
     {
-        clear();
-        refresh();
-        mvprintw(0, 0, "Player couldn't be updated !");
-        mvprintw(2, 0, "Press any key to exit\n");
-        getch(); 
+        printError("Player couldn't be updated !");
     }
 }
 
-// Rendering Functions
+// Rendering Functions //
 
 void Player_Render(Player* player)
 {
@@ -373,17 +370,12 @@ void Player_Render(Player* player)
     }
     else
     {
-        clear();
-        refresh();
-        mvprintw(0, 0, "Player couldn't be rendered !");
-        mvprintw(2, 0, "Press any key to exit\n");
-        getch(); 
+        printError("Player couldn't be rendered !");
     }
 }
 
-// Destructor
+// Destructor //
 
-// Free memory
 void Player_Free(Player* player)
 {
     Team_Interface_Free(player->team_interface);

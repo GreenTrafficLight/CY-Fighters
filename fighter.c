@@ -6,6 +6,8 @@
 
 #include "ncurses.h"
 
+#include "commons.h"
+
 //// Constructor ////
 
 Fighter* Fighter_Init(char* name, Team_Interface* team_interface)
@@ -151,6 +153,7 @@ void Fighter_UseSkill(Skill* skill, Fighter* fighter)
         }
     }
     
+    
     // Set Effect of choosen fighter
     else if (skill->modifier == SKILL_MODIFIER_SET_EFFECT)
     {
@@ -282,11 +285,17 @@ void Fighter_ResetStatus(Fighter* fighter, Fighter_Status* fighter_status)
 
 void Fighter_Update(Fighter* fighter)
 {
-    // Update skill (cooldown)
-    Fighter_UpdateSkills(fighter);
+    if (fighter != NULL)
+    {
+        // Update skill (cooldown)
+        Fighter_UpdateSkills(fighter);
 
-    // Status Update
-    Fighter_UpdateStatus(fighter);
+        // Status Update
+        Fighter_UpdateStatus(fighter);
+    }
+    else
+        printError("Fighter couldn't be updated !");
+
 }
 
 //// Rendering Functions ////
@@ -318,12 +327,15 @@ void Fighter_DrawStatus(Fighter* fighter, int fighter_index)
         {
             if (fighter->fighter_status[i] != NULL)
             {
-                if (fighter->fighter_status[i]->current_status != FIGHTER_STATUS_NORMAL && fighter->fighter_status[i]->affected_skill->duration != 0)
+                if (fighter->fighter_status[i]->current_status != FIGHTER_STATUS_NORMAL)
                 {
                     char* status_drawing = malloc(sizeof(char)*16);
 
                     switch (fighter->fighter_status[i]->current_status)
                     {
+                        case FIGHTER_STATUS_STATS_INCREASED:
+                            status_drawing = "Up"; //"\u2744";
+                            break;
                         case FIGHTER_STATUS_STATS_DECREASED:
                             status_drawing = "Down"; //"\u2744";
                             break;
@@ -387,6 +399,8 @@ void Fighter_Render(Fighter* fighter, int fighter_index)
         Fighter_DrawHealthBar(fighter, fighter_index);
         //Fighter_DrawTurnBar(fighter, fighter_index);
     }
+    else
+        printError("Fighter couldn't be rendered !");
 }
 
 // Destructor //

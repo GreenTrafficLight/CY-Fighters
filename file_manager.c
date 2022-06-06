@@ -251,7 +251,6 @@ char File_Manager_ReadFighterAttributes(FILE* file, char c, Fighter* fighter)
         {   
             memset(fighter->name, 0, sizeof(fighter->name));
             c = File_Manager_ReadString(file, c, fighter->name);
-            fighter->name[strlen(fighter->name)] = '\0';
         }
         else if (strcmp(attribute, "health") == 0)
         {
@@ -347,13 +346,11 @@ char File_Manager_ReadSkillAttributes(FILE* file, char c, Skill* skill)
         {   
             memset(skill->name, 0, sizeof(skill->name));
             c = File_Manager_ReadString(file, c, skill->name);
-            skill->name[strlen(skill->name)] = '\0';
         }
         else if (strcmp(attribute, "description") == 0)
         {
             memset(skill->description, 0, sizeof(skill->description));
             c = File_Manager_ReadString(file, c, skill->description);
-            skill->description[strlen(skill->description)] = '\0';
         }
         else if (strcmp(attribute, "modifier") == 0)
         {
@@ -438,15 +435,14 @@ void File_Manager_ReadSkillEffect(char* attribute, Skill* skill)
         skill->attribute = SKILL_ATTRIBUTE_AGILITY;
     else if (strcmp(attribute, "speed") == 0)
         skill->attribute = SKILL_ATTRIBUTE_SPEED;
-    else if (strcmp(attribute, "fire") == 0)
-        skill->attribute = SKILL_ATTRIBUTE_FIRE;
+    else if (strcmp(attribute, "fire") == 0) 
+        skill->attribute = SKILL_ATTRIBUTE_FIRE;        
     else if (strcmp(attribute, "frozen") == 0)
         skill->attribute = SKILL_ATTRIBUTE_FROZEN;
     else if (strcmp(attribute, "sleep") == 0)
         skill->attribute = SKILL_ATTRIBUTE_SLEEP;
     else
         skill->attribute = SKILL_ATTRIBUTE_NONE;
-        
 }
 
 char File_Manager_ReadString(FILE* file, char c, char* str)
@@ -462,6 +458,8 @@ char File_Manager_ReadString(FILE* file, char c, char* str)
         i++;
         c = fgetc(file);
     }
+
+    str[i] = '\0';
     
     c = fgetc(file);
 

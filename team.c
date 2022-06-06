@@ -6,6 +6,8 @@
 
 #include "ncurses.h"
 
+#include "commons.h"
+
 // Constructor
 
 Team* Team_Init(Team_Interface* interface)
@@ -110,7 +112,10 @@ void Team_Render(Team* team)
         // Refresh window so the drawings can show up
         wrefresh(team->interface->window);
     }
-
+    else 
+    {
+        printError("Team couldn't be rendered !");
+    }
 }
 
 // Destructor //

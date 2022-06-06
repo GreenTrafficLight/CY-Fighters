@@ -113,3 +113,9 @@ void Fighters_Database_Render(Fighters_Database* fighters_database)
         }
     }
 }
+
+void Fighters_Database_Free(Fighters_Database* fighters_database)
+{
+    free(fighters_database);
+    fighters_database = NULL;
+}

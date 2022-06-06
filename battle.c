@@ -182,15 +182,9 @@ void Battle_TakeTurn(Battle* battle, Player* player1, Player* player2)
         }
     }
 
-
     // TO DO : Add for loop to add skill damage
-    /*for (int i = 0; i < 3; i++)
-        Player_Update(player2, i, player1);
-
-    Player_Render(player2);*/
-
-    for (int i = 0; i < player1->team->fighters_count; i++)
-        Player_Update(player1, i, player2);
+    //for (int i = 0; i < player2->team->fighters_count; i++)
+        //Player_Update(player2, i, player1);
 
     // Check if one of the player team is beaten
     if (player1->is_defeated || player2->is_defeated)
