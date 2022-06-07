@@ -30,10 +30,10 @@ Battle* Battle_Init();
 // Gameplay Functions //
 
 // Player choose against another Player or Computer
-enum BATTLE_AGAINST_OPTION Battle_ChooseAgainst(Battle* battle);
+enum BATTLE_AGAINST_OPTION Battle_ChooseAgainst();
 
 // Player choose which diffilcuty the computer is (If they choose to be against a Computer)
-enum BATTLE_DIFFICULTY Battle_ChooseComputerDifficutly(Battle* battle);
+enum BATTLE_DIFFICULTY Battle_ChooseComputerDifficutly();
 
 // Decide which player get to play it's turn 
 void Battle_TakeTurn(Battle* battle, Player* player1, Player* player2);
@@ -42,7 +42,7 @@ void Battle_TakeTurn(Battle* battle, Player* player1, Player* player2);
 void Battle_Update(Battle* battle, Player* player1, Player* player2);
 
 // Announce at the end battle which player won
-void Battle_AnnounceVictory(Battle* battle, Player* player1, Player* player2);
+void Battle_AnnounceVictory(Player* player1, Player* player2);
 
 // Destructor //
 

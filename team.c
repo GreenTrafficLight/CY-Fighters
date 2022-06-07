@@ -69,18 +69,13 @@ void Team_isBeaten(Team* team)
     team->is_locked = true;
 }
 
-void Team_Update(Team* team)
-{
-
-}
-
 // Rendering Functions
 
 void Team_DrawName(Team* team)
 {
     char* team_name_drawing = malloc(sizeof(char)* strlen(team->name));
 
-    for(int i = 0; i < strlen(team->name); i++)
+    for(long unsigned int i = 0; i < strlen(team->name); i++)
     {
         team_name_drawing[i] = toupper(team->name[i]);
     }

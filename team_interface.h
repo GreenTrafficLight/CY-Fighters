@@ -12,8 +12,10 @@ typedef struct
 
     int spacing;
 
-    int height;
+    int x;
+    int y;
 
+    int height;
     int width;
 
 } Team_Interface;

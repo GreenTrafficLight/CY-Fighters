@@ -1,9 +1,9 @@
-OBJS	= battle.o commons.o computer.o fighters_database.o fighter.o file_manager.o game.o main.o menu.o player.o skill.o team_interface.o team.o
-SOURCE	= battle.c commons.c computer.c fighters_database.c fighter.c file_manager.c game.c main.c menu.c player.c skill.c team_interface.c team.c
-HEADER	= battle.h commons.h computer.h fighters_database.h fighter.h file_manager.h game.h menu.h player.h skill.h team_interface.h team.h
+OBJS	= battle.o commons.o computer.o fighters_database.o fighter.o file_manager.o game.o main.o menu.o player.o skill.o sprite.o team_interface.o team.o
+SOURCE	= battle.c commons.c computer.c fighters_database.c fighter.c file_manager.c game.c main.c menu.c player.c skill.c sprite.c team_interface.c team.c
+HEADER	= battle.h commons.h computer.h fighters_database.h fighter.h file_manager.h game.h menu.h player.h skill.h sprite.h team_interface.h team.h
 OUT	= main
 CC	 = gcc
-FLAGS	 = -g -c -Wall
+FLAGS	 = -g -c -Wall -Wextra
 LFLAGS	 = -lncursesw
 
 all: $(OBJS)
@@ -41,6 +41,9 @@ player.o: player.c
 
 skill.o: skill.c
 	$(CC) $(FLAGS) skill.c 
+
+sprite.o: sprite.c
+	$(CC) $(FLAGS) sprite.c 
 
 team_interface.o: team_interface.c
 	$(CC) $(FLAGS) team_interface.c 

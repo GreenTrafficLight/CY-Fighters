@@ -10,11 +10,13 @@
 
 //// Constructor ////
 
-Fighter* Fighter_Init(char* name, Team_Interface* team_interface)
+Fighter* Fighter_Init(Team_Interface* team_interface)
 {
     Fighter* fighter = malloc(sizeof(Fighter));
 
     fighter->team_interface = team_interface;
+    
+    fighter->sprite = Sprite_Init();
 
     fighter->name = malloc(sizeof(char) * 16);
 
@@ -408,6 +410,8 @@ void Fighter_Render(Fighter* fighter, int fighter_index)
 
 void Fighter_Free(Fighter* fighter)
 {
+    Sprite_Free(fighter->sprite);
+
     for (int i = 0; i < SKILL_MAX_SIZE; i++)
     {
         if (fighter->skills[i] != NULL)

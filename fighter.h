@@ -3,6 +3,7 @@
 
 #include "skill.h"
 #include "team_interface.h"
+#include "sprite.h"
 
 #include <stdbool.h>
 
@@ -29,6 +30,8 @@ typedef struct
 typedef struct 
 {
     Team_Interface* team_interface;
+
+	Sprite* sprite;
 
 	// Fighter Description
 	char* name;
@@ -58,7 +61,7 @@ typedef struct
 //// Constructor ////
 
 // Allocator memory for Fighter struct
-Fighter* Fighter_Init(char* name, Team_Interface* team_interface);
+Fighter* Fighter_Init(Team_Interface* team_interface);
 
 // Add skill to fighter
 void Fighter_AddSkill(Fighter* fighter, Skill* skill);

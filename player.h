@@ -14,6 +14,8 @@ typedef struct
 
 	Team_Interface* team_interface;
 
+	WINDOW* sprite_window;
+
 	bool isYourTurn;
 
 	bool is_defeated;
@@ -25,7 +27,7 @@ typedef struct
 // Constructor //
 
 // Allocate memory for Player struct
-Player* Player_Init(bool isComputer, Team_Interface* team_interface);
+Player* Player_Init(bool isComputer, Team_Interface* team_interface, WINDOW* sprite_window);
 
 // Create team for player, choose if it's played by a computer or not
 void Player_CreateTeam(Player* player, bool isComputer);
@@ -42,7 +44,7 @@ enum PLAYER_CHOICE Player_ChooseChoice(Player* player, int fighter_index);
 int Player_ChooseSkill(Player* player, int fighter_index);
 
 // Player choose which fighter to attack
-int Player_ChooseFighter(Player* player, int fighter_index, Player* opponent);
+int Player_ChooseFighter(Player* player, Player* opponent);
 
 // Check if the player has been defeated
 void Player_IsDefeated(Player* player);

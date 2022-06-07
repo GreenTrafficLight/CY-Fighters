@@ -89,6 +89,10 @@ void Computer_UseRandomSkill(Player* computer, int fighter_index, Player* player
         case SKILL_MODIFIER_LOOP:
             for (int i = 0; i < selected_skill->loop; i++)
             {
+                Player_IsDefeated(player);
+                if (player->is_defeated == true)
+                    break;
+
                 selected_fighter_index = Computer_GetWeakestFighter(player);
                 selected_fighter = player->team->fighters[selected_fighter_index];
 

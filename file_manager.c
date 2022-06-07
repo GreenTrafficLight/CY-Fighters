@@ -148,7 +148,7 @@ Fighter* File_Manager_GetFighter(char* fighter_name)
         return NULL;
     }
 
-    Fighter* fighter = Fighter_Init(fighter_name, NULL);
+    Fighter* fighter = Fighter_Init(NULL);
 
     char c;
 
@@ -157,7 +157,8 @@ Fighter* File_Manager_GetFighter(char* fighter_name)
     {
         c = fgetc(file);
 
-        fighter = Fighter_Init(fighter_name, NULL);
+        Fighter_Free(fighter);
+        fighter = Fighter_Init(NULL);
 
         c = File_Manager_ReadFighterAttributes(file, c, fighter);
 
@@ -177,6 +178,9 @@ Fighter* File_Manager_GetFighter(char* fighter_name)
         getch();
         return NULL;
     }
+
+
+    //Sprite_Load(fighter->sprite, "bob");
 
     return fighter;
 }
@@ -202,6 +206,7 @@ Skill* File_Manager_GetSkill(char* skill_name)
     {
         c = fgetc(file);
 
+        Skill_Free(skill);
         skill = Skill_Init(skill_name, NULL);
 
         c = File_Manager_ReadSkillAttributes(file, c, skill);
@@ -304,6 +309,16 @@ char File_Manager_ReadFighterAttributes(FILE* file, char c, Fighter* fighter)
 
             // Skip ']'
             c = fgetc(file);
+        }
+        else if (strcmp(attribute, "sprite") == 0)
+        {
+            char* sprite_name = malloc(sizeof(char) * 256);
+
+            c = File_Manager_ReadString(file, c, sprite_name);
+
+            Sprite_Load(fighter->sprite, sprite_name);
+
+            free(sprite_name);            
         }
 
         c = File_Manager_Skip_Whitespace(file, c);

@@ -17,7 +17,7 @@ Battle* Battle_Init()
     return battle;
 }
 
-enum BATTLE_AGAINST_OPTION Battle_ChooseAgainst(Battle* battle)
+enum BATTLE_AGAINST_OPTION Battle_ChooseAgainst()
 {
     clear();
     refresh();
@@ -66,7 +66,7 @@ enum BATTLE_AGAINST_OPTION Battle_ChooseAgainst(Battle* battle)
     return input;
 }
 
-enum BATTLE_DIFFICULTY Battle_ChooseComputerDifficutly(Battle* battle)
+enum BATTLE_DIFFICULTY Battle_ChooseComputerDifficutly()
 {
     clear();
     refresh();
@@ -123,7 +123,9 @@ void Battle_TakeTurn(Battle* battle, Player* player1, Player* player2)
 {
     // Render both Teams
     Player_Render(player1);
+    Sprite_Render(player1->team->fighters[0]->sprite, player1->sprite_window);
     Player_Render(player2);
+    Sprite_Render(player2->team->fighters[0]->sprite, player2->sprite_window);
 
     if (!player1->isComputer)
     {
@@ -143,6 +145,8 @@ void Battle_TakeTurn(Battle* battle, Player* player1, Player* player2)
                     // Break the loop if the opponent team has been defeated
                     if (player2->is_defeated)
                         break;
+
+                    Sprite_Render(player1->team->fighters[i]->sprite, player1->sprite_window);
 
                     // Player control what to do
                     Player_Update(player1, i, player2);
@@ -184,7 +188,11 @@ void Battle_TakeTurn(Battle* battle, Player* player1, Player* player2)
 
     // TO DO : Add for loop to add skill damage
     for (int i = 0; i < player1->team->fighters_count; i++)
-        Player_Update(player1, i, player2);
+    {
+        if (!player1->team->fighters[i]->is_locked)
+            Player_Update(player1, i, player2);
+    }
+    
 
     // Check if one of the player team is beaten
     if (player1->is_defeated || player2->is_defeated)
@@ -209,13 +217,13 @@ void Battle_Update(Battle* battle, Player* player1, Player* player2)
     }
 
     // Announce which player won
-    Battle_AnnounceVictory(battle, player1, player2);
+    Battle_AnnounceVictory(player1, player2);
 
     // Enable keyboard typing
     echo();
 }
 
-void Battle_AnnounceVictory(Battle* battle, Player* player1, Player* player2)
+void Battle_AnnounceVictory(Player* player1, Player* player2)
 {
     // Refresh Screen
     clear();

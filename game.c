@@ -9,6 +9,7 @@
 #include "battle.h"
 #include "fighters_database.h"
 
+
 #include "player.h"
 #include "file_manager.h"
 
@@ -54,13 +55,17 @@ void Game_Loop(Game* game)
             // Draw player 1 team interface at the left bottom screen
             Team_Interface* team_interface1 = Team_Interface_Init(6, 50, 0, 0);
 
+            WINDOW* sprite_window1 = newwin(LINES - team_interface1->height * 3, team_interface1->width, 0, 0);
+
             // Draw player 2 team interface at the right bottom screen
             Team_Interface* team_interface2 = Team_Interface_Init(6, 50, 0, COLS - (50 + 2));
+
+            WINDOW* sprite_window2 = newwin(LINES - team_interface2->height * 3, team_interface1->width, 0, team_interface2->x);
             
             // Initialize the two players
 
             // Always a controlled player
-            Player* player1 = Player_Init(false, team_interface1);
+            Player* player1 = Player_Init(false, team_interface1, sprite_window1);
 
             // Choose fighter of player
             if (!game->battle->is_quickBattle)
@@ -72,9 +77,9 @@ void Game_Loop(Game* game)
             Player* player2;
 
             if (batte_against_option == BATTLE_AGAINST_OPTION_PLAYER)
-                player2 = Player_Init(false, team_interface2);
+                player2 = Player_Init(false, team_interface2, sprite_window2);
             else if (batte_against_option == BATTLE_AGAINST_OPTION_COMPUTER)
-                player2 = Player_Init(true, team_interface2);
+                player2 = Player_Init(true, team_interface2, sprite_window2);
 
             // Choose fighter of player
             if (!game->battle->is_quickBattle)

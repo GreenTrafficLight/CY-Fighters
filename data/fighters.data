@@ -6,6 +6,7 @@
 	"agility": 1
 	"speed": 0
 	"skills":  [ "FIRE" ]
+	"sprite": "bob"
 },
 {
 	"name": "Fighter 2"
@@ -15,6 +16,7 @@
 	"agility": 5
 	"speed": 0
 	"skills":  [ "ATTACK DECREASED" ]
+	"sprite": "car"
 },
 {
 	"name": "Fighter 3"
@@ -24,6 +26,7 @@
 	"agility": 10
 	"speed": 0
 	"skills":  [ "LOOP" ]
+	"sprite": "owl"
 },
 {
 	"name": "Fighter 4"
@@ -33,4 +36,5 @@
 	"agility": 0
 	"speed": 0
 	"skills":  [ "HEAL" ]
+	"sprite": "bunny"
 },

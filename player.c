@@ -10,7 +10,7 @@
 
 // Constructor //
 
-Player* Player_Init(bool isComputer, Team_Interface* team_interface)
+Player* Player_Init(bool isComputer, Team_Interface* team_interface, WINDOW* sprite_window)
 {
     Player* player = malloc(sizeof(Player));
 
@@ -19,6 +19,8 @@ Player* Player_Init(bool isComputer, Team_Interface* team_interface)
     player->isYourTurn = false;
 
     player->team_interface = team_interface;
+
+    player->sprite_window = sprite_window;
 
     // Activate arroww keys for team interface window
     keypad(player->team_interface->window, true);
@@ -184,7 +186,7 @@ int Player_ChooseSkill(Player* player, int fighter_index)
     return input;
 }
 
-int Player_ChooseFighter(Player* player, int fighter_index, Player* opponent)
+int Player_ChooseFighter(Player* player, Player* opponent)
 {
     // Refresh team window
     Team_Render(player->team);
@@ -272,7 +274,7 @@ void Player_HandleInputs(Player* player, int fighter_index, Player* opponent)
     {
         // If the player has choosen to use the "Normal Attack" option
         case PLAYER_CHOICE_ATTACK:
-            selected_fighter_index = Player_ChooseFighter(player, fighter_index, opponent);
+            selected_fighter_index = Player_ChooseFighter(player, opponent);
             selected_fighter = opponent->team->fighters[selected_fighter_index];
 
             Fighter_Attack(player_fighter, selected_fighter);
@@ -289,7 +291,7 @@ void Player_HandleInputs(Player* player, int fighter_index, Player* opponent)
             {
                 // Choose your own fighters
                 case SKILL_MODIFIER_INCREASE:
-                    selected_fighter_index = Player_ChooseFighter(player, fighter_index, player);
+                    selected_fighter_index = Player_ChooseFighter(player, player);
                     selected_fighter = player->team->fighters[selected_fighter_index];
 
                     Fighter_UseSkill(selected_skill, selected_fighter);
@@ -301,7 +303,11 @@ void Player_HandleInputs(Player* player, int fighter_index, Player* opponent)
                 case SKILL_MODIFIER_LOOP:
                     for (int i = 0; i < selected_skill->loop; i++)
                     {
-                        selected_fighter_index = Player_ChooseFighter(player, fighter_index, opponent);
+                        Player_IsDefeated(opponent);
+                        if (opponent->is_defeated == true)
+                            break;
+
+                        selected_fighter_index = Player_ChooseFighter(player, opponent);
                         selected_fighter = opponent->team->fighters[selected_fighter_index];
 
                         Fighter_Attack(player_fighter, selected_fighter);
@@ -310,7 +316,7 @@ void Player_HandleInputs(Player* player, int fighter_index, Player* opponent)
 
                 //
                 default:
-                    selected_fighter_index = Player_ChooseFighter(player, fighter_index, opponent);
+                    selected_fighter_index = Player_ChooseFighter(player, opponent);
                     selected_fighter = opponent->team->fighters[selected_fighter_index];
 
                     Fighter_UseSkill(selected_skill, selected_fighter);
