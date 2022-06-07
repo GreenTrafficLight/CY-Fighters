@@ -57,7 +57,7 @@ typedef struct {
 // Constructor //
 
 // Allocate Memory
-Skill* Skill_Init(char* name, Team_Interface* team_interface);
+Skill* Skill_Init(Team_Interface* team_interface);
 
 // Gameplay Functions //
 

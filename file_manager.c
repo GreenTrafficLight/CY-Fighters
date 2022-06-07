@@ -198,7 +198,7 @@ Skill* File_Manager_GetSkill(char* skill_name)
         return NULL;
     }
 
-    Skill* skill = Skill_Init(skill_name, NULL);
+    Skill* skill = Skill_Init(NULL);
 
     char c;
 
@@ -207,7 +207,7 @@ Skill* File_Manager_GetSkill(char* skill_name)
         c = fgetc(file);
 
         Skill_Free(skill);
-        skill = Skill_Init(skill_name, NULL);
+        skill = Skill_Init(NULL);
 
         c = File_Manager_ReadSkillAttributes(file, c, skill);
 
