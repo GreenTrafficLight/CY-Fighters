@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "commons.h"
+
 void File_Manager_GetFighters(Fighters_Database* fighters_database)
 {
     FILE* file = fopen("data/fighters.data", "r");
@@ -33,7 +35,7 @@ void File_Manager_GetFighters(Fighters_Database* fighters_database)
         index++;
     }
 
-    //fclose(file);
+    fclose(file);
 
     //mvprintw(1, 0, "%ld", ftell(file));
 }
@@ -166,7 +168,7 @@ Fighter* File_Manager_GetFighter(char* fighter_name)
         c = fgetc(file);
     }
 
-    //fclose(file);
+    fclose(file);
 
     // Return Error when the searched fighter isn't found
     if (strcmp(fighter->name, fighter_name) != 0)
@@ -178,9 +180,6 @@ Fighter* File_Manager_GetFighter(char* fighter_name)
         getch();
         return NULL;
     }
-
-
-    //Sprite_Load(fighter->sprite, "bob");
 
     return fighter;
 }
@@ -215,7 +214,7 @@ Skill* File_Manager_GetSkill(char* skill_name)
         c = fgetc(file);
     }
 
-    //fclose(file);
+    fclose(file);
 
     if (strcmp(skill->name, skill_name) != 0)
     {
@@ -254,7 +253,7 @@ char File_Manager_ReadFighterAttributes(FILE* file, char c, Fighter* fighter)
 
         if (strcmp(attribute, "name") == 0)
         {   
-            memset(fighter->name, 0, sizeof(fighter->name));
+            memset(fighter->name, 0, MAX_FIGHER_NAME_SIZE);
             c = File_Manager_ReadString(file, c, fighter->name);
         }
         else if (strcmp(attribute, "health") == 0)
@@ -359,12 +358,12 @@ char File_Manager_ReadSkillAttributes(FILE* file, char c, Skill* skill)
 
         if (strcmp(attribute, "name") == 0)
         {   
-            memset(skill->name, 0, sizeof(skill->name));
+            memset(skill->name, 0, MAX_SKILL_NAME_SIZE);
             c = File_Manager_ReadString(file, c, skill->name);
         }
         else if (strcmp(attribute, "description") == 0)
         {
-            memset(skill->description, 0, sizeof(skill->description));
+            memset(skill->description, 0, MAX_SKILL_DESCRIPTION_SIZE);
             c = File_Manager_ReadString(file, c, skill->description);
         }
         else if (strcmp(attribute, "modifier") == 0)

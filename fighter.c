@@ -18,7 +18,7 @@ Fighter* Fighter_Init(Team_Interface* team_interface)
     
     fighter->sprite = Sprite_Init();
 
-    fighter->name = malloc(sizeof(char) * 16);
+    fighter->name = malloc(sizeof(char) * MAX_FIGHER_NAME_SIZE);
 
     fighter->status = FIGHTER_STATUS_NORMAL;
 

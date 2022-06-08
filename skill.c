@@ -12,8 +12,8 @@ Skill* Skill_Init(Team_Interface* team_interface)
 
     skill->team_interface = team_interface;
 
-    skill->name = malloc(sizeof(char) * 16);
-    skill->description = malloc(sizeof(char) * 256);
+    skill->name = malloc(sizeof(char) * MAX_SKILL_NAME_SIZE);
+    skill->description = malloc(sizeof(char) * MAX_SKILL_DESCRIPTION_SIZE);
 
     skill->modifier = SKILL_MODIFIER_NONE;
     skill->attribute = SKILL_ATTRIBUTE_NONE;

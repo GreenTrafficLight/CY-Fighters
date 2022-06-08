@@ -21,9 +21,12 @@ Sprite* Sprite_Init()
 void Sprite_Load(Sprite* sprite, char* sprite_name)
 {
     // Get path of sprite
+    char* path;
+
     int path_size = strlen("data/sprites/") + strlen(sprite_name) + strlen(".sprite") + 1;
 
-    char* path = malloc(sizeof(char) * path_size);
+    path = malloc(sizeof(char) * path_size);
+    strcpy(path, "");
     if (path == NULL)
     {
         printError("Memory for path couldn't be allocated !");
@@ -34,7 +37,9 @@ void Sprite_Load(Sprite* sprite, char* sprite_name)
     strcat(path, sprite_name);
     strcat(path, ".sprite");
 
-    path[strlen(path)] = '\0';
+    //path[path_size] = '\0';
+
+
 
     FILE* file = fopen(path, "r");
     if (file == NULL)
@@ -73,8 +78,10 @@ void Sprite_Load(Sprite* sprite, char* sprite_name)
         sprite->data[height] = width;
     }
 
+    free(path);
+
     // Cause errors for some reason
-    //fclose(file);
+    fclose(file);
 }
 
 void Sprite_GetSizeFromFile(Sprite* sprite, FILE* file)

@@ -18,6 +18,8 @@ Player* Player_Init(bool isComputer, Team_Interface* team_interface, WINDOW* spr
 
     player->isYourTurn = false;
 
+    player->is_defeated = false;
+
     player->team_interface = team_interface;
 
     player->sprite_window = sprite_window;

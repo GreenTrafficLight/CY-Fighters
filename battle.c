@@ -1,6 +1,7 @@
 #include "battle.h"
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "computer.h"
 
@@ -19,6 +20,8 @@ Battle* Battle_Init()
 
 enum BATTLE_AGAINST_OPTION Battle_ChooseAgainst()
 {
+    noecho();
+
     clear();
     refresh();
 
@@ -63,11 +66,15 @@ enum BATTLE_AGAINST_OPTION Battle_ChooseAgainst()
         }
     } while (input < 0);
 
+    echo();
+
     return input;
 }
 
 enum BATTLE_DIFFICULTY Battle_ChooseComputerDifficutly()
 {
+    noecho();
+
     clear();
     refresh();
 
@@ -114,6 +121,8 @@ enum BATTLE_DIFFICULTY Battle_ChooseComputerDifficutly()
         }
     } while (input < 0);
 
+    echo();
+
     return input;
 }
 
@@ -129,6 +138,7 @@ void Battle_TakeTurn(Battle* battle, Player* player1, Player* player2)
 
     if (!player1->isComputer)
     {
+
         // Player turn
         player1->isYourTurn = true;
 
@@ -150,7 +160,7 @@ void Battle_TakeTurn(Battle* battle, Player* player1, Player* player2)
 
                     // Player control what to do
                     Player_Update(player1, i, player2);
-                    
+
                     // Render both team
                     Player_Render(player1);
                     Player_Render(player2);
@@ -176,12 +186,16 @@ void Battle_TakeTurn(Battle* battle, Player* player1, Player* player2)
                 if (player2->is_defeated)
                     break;
 
+                Sprite_Render(player1->team->fighters[i]->sprite, player1->sprite_window);
+
                 // Computer control what to do
                 Computer_Update(player1, i, player2, battle->difficulty);
                 
                 // Render both team
                 Player_Render(player1);
                 Player_Render(player2);
+
+                sleep(1);
             }
         }
     }
