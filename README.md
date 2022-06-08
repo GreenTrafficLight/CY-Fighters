@@ -5,7 +5,7 @@ Project for school. (Had to do it 3 times, one time with the interface stored in
 
 (Playing in a full screen terminal is recommended)
 
-(Download CY-Fighters v1.0.0 release if the updated one doesn't work)
+(Download CY-Fighters v1.0.0 release if the updated repository doesn't work)
 
 A (unfinished) C classic turn based game, Nuff said.
 
